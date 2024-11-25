@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Task;
+use Inertia\Inertia;
+use Illuminate\Support\Facades\Redirect;
 class TaskManagerController extends Controller
 {
     /**
@@ -11,7 +13,8 @@ class TaskManagerController extends Controller
      */
     public function index()
     {
-        //
+        $res = Task::all();
+        return Inertia::render('Dashboard/Dashboard', ['data'=>$res], 200);
     }
 
     /**
@@ -19,7 +22,7 @@ class TaskManagerController extends Controller
      */
     public function create()
     {
-        //
+        return  Inertia::render('Dashboard/Dashboard',[],200);
     }
 
     /**
@@ -27,7 +30,14 @@ class TaskManagerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'title'=>'string|required|max:255',
+            'description' =>'string|nullable',
+            'status' => 'integer|nullable',
+            'priority' => 'boolean|nullable'
+        ]);
+        $res = Task::create($validated);
+        return Redirect::route('dashboard');
     }
 
     /**

@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description')->nullbale();
-            $table->string('status');
-            $table->string('priority');
+            $table->boolean('status')->default(false);
+            $table->integer('priority')->default(1);
             // $table->date('due_date');
             // $table->integer('assigned_to');
             // $table->integer('created_by');

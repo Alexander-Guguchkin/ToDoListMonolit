@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
+import Todolist from '@/Pages/Dashboard/Todolist.vue';
+import { onMounted } from 'vue';
+import axios from 'axios';
+let props =defineProps({
+    data:Object
+})
 </script>
 
 <template>
@@ -22,6 +28,7 @@ import { Head } from '@inertiajs/vue3';
                 >
                     <div class="p-6 text-gray-900">
                         You're logged in!
+                        <Todolist :data="props.data"/>
                     </div>
                 </div>
             </div>
