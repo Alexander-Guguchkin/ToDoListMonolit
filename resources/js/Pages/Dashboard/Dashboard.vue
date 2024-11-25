@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, router } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
 import Todolist from '@/Pages/Dashboard/Todolist.vue';
-import { onMounted } from 'vue';
-import axios from 'axios';
+
 let props =defineProps({
     data:Object
 })

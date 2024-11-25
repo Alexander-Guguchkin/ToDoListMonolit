@@ -19,7 +19,6 @@ Route::get('/dashboard', [TaskManagerController::class, 'index'])
 ->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    // Route::get('/tasks',[TaskManagerController::class, 'index'])->name('tasks.index');
     Route::get('/tasks/create',[TaskManagerController::class, 'create'])->name('tasks.create');
     Route::post('/tasks', [TaskManagerController::class, 'store'])->name('tasks.store');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

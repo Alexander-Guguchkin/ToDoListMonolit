@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { onMounted, reactive, ref } from 'vue';
-import { router, useForm } from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import DangerButton from '@/Components/DangerButton.vue';
+
 const props = defineProps({
     data:Object
 });
