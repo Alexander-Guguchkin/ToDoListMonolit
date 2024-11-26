@@ -3,7 +3,7 @@ import { useForm } from '@inertiajs/vue3';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-
+import DeleteTask from '@/Pages/Dashboard/DeleteTask.vue';
 const props = defineProps({
     data:Object
 });
@@ -21,7 +21,7 @@ const form = useForm({
         <h2>Tasks</h2>
         <ul>
             <li v-for="task in props.data" :key="task.id">
-                {{ task.title }} - {{ task.description }} - Status: {{ task.status }} - Priority: {{ task.priority ? 'Yes' : 'No' }}
+                {{ task.title }} - {{ task.description }} - Status: {{ task.status }} - Priority: {{ task.priority ? 'Yes' : 'No' }} <DeleteTask :id="String(task.id)"/>
             </li>
         </ul>
         <form @submit.prevent="form.post('/tasks')">

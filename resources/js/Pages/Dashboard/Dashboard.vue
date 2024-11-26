@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
-import Todolist from '@/Pages/Dashboard/Todolist.vue';
+import CreateTask from '@/Pages/Dashboard/CreateTask.vue';
 
 let props =defineProps({
     data:Object
@@ -27,7 +27,7 @@ let props =defineProps({
                 >
                     <div class="p-6 text-gray-900">
                         You're logged in!
-                        <Todolist :data="props.data"/>
+                        <CreateTask :data="props.data"/>
                     </div>
                 </div>
             </div>

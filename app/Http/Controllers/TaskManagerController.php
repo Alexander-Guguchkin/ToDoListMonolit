@@ -13,8 +13,8 @@ class TaskManagerController extends Controller
      */
     public function index()
     {
-        $res = Task::all();
-        return Inertia::render('Dashboard/Dashboard', ['data'=>$res], 200);
+        $tasks = Task::all();
+        return Inertia::render('Dashboard/Dashboard', ['data'=>$tasks], 200);
     }
 
     /**
@@ -36,7 +36,7 @@ class TaskManagerController extends Controller
             'status' => 'integer|nullable',
             'priority' => 'boolean|nullable'
         ]);
-        $res = Task::create($validated);
+        $task = Task::create($validated);
         return Redirect::route('dashboard');
     }
 
@@ -69,6 +69,8 @@ class TaskManagerController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $task = Task::find($id);
+        $task->delete();
+        return Redirect::route('dashboard');
     }
 }
