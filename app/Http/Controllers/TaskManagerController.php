@@ -18,14 +18,6 @@ class TaskManagerController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return  Inertia::render('Dashboard/Dashboard',[],200);
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -45,15 +37,8 @@ class TaskManagerController extends Controller
      */
     public function show(string $id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        $task = Task::find($id);
+        return Inertia::render('Dashboard/Dashboard', ['data'=>$task], 200);
     }
 
     /**
@@ -61,7 +46,14 @@ class TaskManagerController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'title'=>'string|required|max:255',
+            'description' =>'string|nullable',
+            'status' => 'integer|nullable',
+            'priority' => 'boolean|nullable'
+        ]);
+        $task = $id->update($validated);
+        return Redirect::route('dashboard');
     }
 
     /**

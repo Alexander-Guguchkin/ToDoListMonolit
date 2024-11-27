@@ -20,7 +20,6 @@ Route::get('/dashboard', [TaskManagerController::class, 'index'])
 
 Route::middleware('auth')->group(function () {
     Route::delete('/tasks/{id}',[TaskManagerController::class, 'destroy'])->name('tasks.delete');
-    Route::get('/tasks/create',[TaskManagerController::class, 'create'])->name('tasks.create');
     Route::post('/tasks', [TaskManagerController::class, 'store'])->name('tasks.store');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

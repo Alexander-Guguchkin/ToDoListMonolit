@@ -1,26 +1,16 @@
-<script setup lang="ts">
-import { useForm } from '@inertiajs/vue3';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-
-
-const props = defineProps({
-    data:Object
-});
-const form = useForm({
-    title:'',
-    description:'',
-    status:1,
-    priority:false
-});
-
-</script>
-
 <template>
     <div>
-
-        <form @submit.prevent="form.post('/tasks')">
+        <PrimaryButton
+                    class="ms-4"
+                    :class="{ 'opacity-25': form.processing }"
+                    :disabled="form.processing"
+                    @click = confrimedTaskModal
+                >
+                    Редактирование
+        </PrimaryButton>
+        <Modal @show="confrimingTaskModal" @close="closeModal">
+            <div class="p-6">
+                <form @submit.prevent="form.post('/tasks')">
             <div>
                 <InputLabel for="title" value="title" />
 
@@ -85,5 +75,51 @@ const form = useForm({
                     Отправить задачу
             </PrimaryButton>
         </form>
+            </div>
+        </Modal>
     </div>
 </template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { useForm } from '@inertiajs/vue3';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
+import Modal from '@/Components/Modal.vue';
+
+const props = defineProps({
+    title:String,
+    description:String,
+    status:Number,
+    priority:Boolean
+});
+const form = useForm({
+    title:props.title,
+    description:props.description,
+    status:props.status,
+    priority:props.priority
+});
+
+const confrimingTaskModal = ref(false);
+const titleInput = ref<HTMLInputElement | null>(null);
+const descriptionInput = ref<HTMLInputElement | null>(null);
+const statusInput = ref<HTMLInputElement | null>(null);
+const priorityInput = ref<HTMLInputElement | null>(null);
+
+function confrimedTaskModal(){
+    confrimingTaskModal.value = !confrimingTaskModal.value;
+}
+function closeModal(){
+    confrimingTaskModal.value = false;
+    form.clearErrors();
+    form.reset();
+}
+const editUser = () => {
+    form.post(route('tasks.update'), {
+        preserveScroll: true,
+        onSuccess: () => closeModal(),
+        onError: () => titleInput.value?.focus(),
+        onFinish: () => {
+            form.reset();
+        },
+    });
+};
+</script>

@@ -2,7 +2,8 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import CreateTask from '@/Pages/Dashboard/CreateTask.vue';
-
+import DeleteTask from '@/Pages/Dashboard/DeleteTask.vue';
+import EditTask from '@/Pages/Dashboard/EditTask.vue';
 let props =defineProps({
     data:Object
 })
@@ -27,6 +28,19 @@ let props =defineProps({
                 >
                     <div class="p-6 text-gray-900">
                         You're logged in!
+                        <h2>Tasks</h2>
+                        <ul>
+                            <li v-for="task in props.data" :key="task.id">
+                                {{ task.title }} - {{ task.description }} - Status: {{ task.status }} - Priority: {{ task.priority ? 'Yes' : 'No' }}
+                                <DeleteTask :id="String(task.id)"/>
+                                <EditTask
+                                    :title="task.title"
+                                    :description="task.description"
+                                    :status="task.priority"
+                                    :priority="task.status"
+                                />
+                            </li>
+                        </ul>
                         <CreateTask :data="props.data"/>
                     </div>
                 </div>
