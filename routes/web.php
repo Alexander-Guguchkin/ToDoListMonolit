@@ -19,6 +19,7 @@ Route::get('/dashboard', [TaskManagerController::class, 'index'])
 ->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::put('/tasks/{id}', [TaskManagerController::class, 'update'])->name('tasks.edit');
     Route::delete('/tasks/{id}',[TaskManagerController::class, 'destroy'])->name('tasks.delete');
     Route::post('/tasks', [TaskManagerController::class, 'store'])->name('tasks.store');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

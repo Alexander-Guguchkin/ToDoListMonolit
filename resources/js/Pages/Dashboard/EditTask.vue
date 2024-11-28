@@ -8,16 +8,16 @@
                 >
                     Редактирование
         </PrimaryButton>
-        <Modal @show="confrimingTaskModal" @close="closeModal">
+        <Modal :show="confrimingTaskModal" @close="closeModal">
             <div class="p-6">
-                <form @submit.prevent="form.post('/tasks')">
             <div>
+                <div>
                 <InputLabel for="title" value="title" />
 
                 <TextInput
                     id="title"
-                    type="title"
-                    class="mt-1 block w-full border"
+                    type="text"
+                    class="block w-full mt-1 border"
                     v-model="form.title"
                     required
                     autofocus
@@ -30,26 +30,17 @@
 
                 <TextInput
                     id="description"
-                    type="description"
-                    class="mt-1 block w-full border"
+                    type="text"
+                    class="block w-full mt-1 border"
                     v-model="form.description"
                     required
                     autofocus
                 />
 
-                <InputError class="mt-2" :message="form.errors.title" />
+                <InputError class="mt-2" :message="form.errors.description" />
             </div>
             <div class="mt-4">
                 <InputLabel for="status" value="status" />
-
-                <TextInput
-                    id="status"
-                    type="number"
-                    class="mt-1 block w-full border"
-                    v-model="form.status"
-                    required
-                    autofocus
-                />
 
                 <InputError class="mt-2" :message="form.errors.status" />
             </div>
@@ -58,8 +49,8 @@
 
                 <TextInput
                     id="priority"
-                    type="boolean"
-                    class="mt-1 block w-full border"
+                    type="number"
+                    class="block w-full mt-1 border"
                     v-model="form.priority"
                     required
                     autofocus
@@ -67,15 +58,24 @@
 
                 <InputError class="mt-2" :message="form.errors.priority" />
             </div>
-            <PrimaryButton
-                    class="ms-4"
-                    :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing"
-                >
-                    Отправить задачу
-            </PrimaryButton>
-        </form>
+
             </div>
+
+        <div class="flex justify-end mt-6">
+                    <SecondaryButton @click="closeModal">
+                        Отмена
+                    </SecondaryButton>
+
+                    <DangerButton
+                        class="ms-3"
+                        :class="{ 'opacity-25': form.processing }"
+                        :disabled="form.processing"
+                        @click="editUser"
+                    >
+                        Отредактировать
+                    </DangerButton>
+            </div>
+</div>
         </Modal>
     </div>
 </template>
@@ -84,12 +84,18 @@ import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import Modal from '@/Components/Modal.vue';
+import InputLabel from '@/Components/InputLabel.vue';
+import TextInput from '@/Components/TextInput.vue';
+import InputError from '@/Components/InputError.vue';
+import SecondaryButton from '@/Components/SecondaryButton.vue';
+import DangerButton from '@/Components/DangerButton.vue';
 
 const props = defineProps({
+    id:Number,
     title:String,
     description:String,
-    status:Number,
-    priority:Boolean
+    status:Boolean,
+    priority:Number
 });
 const form = useForm({
     title:props.title,
@@ -113,10 +119,9 @@ function closeModal(){
     form.reset();
 }
 const editUser = () => {
-    form.post(route('tasks.update'), {
+    form.put(`/tasks/${props.id}`, {
         preserveScroll: true,
         onSuccess: () => closeModal(),
-        onError: () => titleInput.value?.focus(),
         onFinish: () => {
             form.reset();
         },

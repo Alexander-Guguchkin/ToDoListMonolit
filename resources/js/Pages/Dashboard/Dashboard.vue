@@ -4,9 +4,22 @@ import { Head } from '@inertiajs/vue3';
 import CreateTask from '@/Pages/Dashboard/CreateTask.vue';
 import DeleteTask from '@/Pages/Dashboard/DeleteTask.vue';
 import EditTask from '@/Pages/Dashboard/EditTask.vue';
+import Modal from '@/Components/Modal.vue';
+import { ref } from 'vue';
 let props =defineProps({
     data:Object
 })
+const confrimingTaskModal = ref(false);
+
+
+function confrimedTaskModal(){
+    confrimingTaskModal.value = true;
+    console.log(confrimingTaskModal.value);
+
+}
+function closeModal(){
+    confrimingTaskModal.value = false;
+}
 </script>
 
 <template>
@@ -27,18 +40,24 @@ let props =defineProps({
                     class="overflow-hidden bg-white shadow-sm sm:rounded-lg"
                 >
                     <div class="p-6 text-gray-900">
-                        You're logged in!
                         <h2>Tasks</h2>
                         <ul>
                             <li v-for="task in props.data" :key="task.id">
-                                {{ task.title }} - {{ task.description }} - Status: {{ task.status }} - Priority: {{ task.priority ? 'Yes' : 'No' }}
-                                <DeleteTask :id="String(task.id)"/>
-                                <EditTask
-                                    :title="task.title"
-                                    :description="task.description"
-                                    :status="task.priority"
-                                    :priority="task.status"
-                                />
+                                <div class="flex">
+                                    <div class="flex-auto task " >
+                                        {{ task.title }} - {{ task.description }} - Priority: {{ task.priority }} - Status: {{ task.status? 'Yes' : 'No' }}
+                                    </div>
+                                    <DeleteTask :id="String(task.id)" class="flex-auto " />
+                                    <EditTask
+                                        :id="task.id"
+                                        :title="task.title"
+                                        :description="task.description"
+                                        :status="task.status"
+                                        :priority="task.priority"
+                                        class="flex-auto "
+                                    />
+
+                                </div>
                             </li>
                         </ul>
                         <CreateTask :data="props.data"/>

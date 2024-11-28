@@ -25,8 +25,8 @@ class TaskManagerController extends Controller
         $validated = $request->validate([
             'title'=>'string|required|max:255',
             'description' =>'string|nullable',
-            'status' => 'integer|nullable',
-            'priority' => 'boolean|nullable'
+            'status' => 'boolean|nullable',
+            'priority' => 'integer|nullable'
         ]);
         $task = Task::create($validated);
         return Redirect::route('dashboard');
@@ -49,10 +49,11 @@ class TaskManagerController extends Controller
         $validated = $request->validate([
             'title'=>'string|required|max:255',
             'description' =>'string|nullable',
-            'status' => 'integer|nullable',
-            'priority' => 'boolean|nullable'
+            'status' => 'boolean|nullable',
+            'priority' => 'integer|nullable'
         ]);
-        $task = $id->update($validated);
+        $task = Task::find($id);
+        $task->update($validated);
         return Redirect::route('dashboard');
     }
 

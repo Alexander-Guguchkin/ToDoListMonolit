@@ -3,16 +3,12 @@ import { useForm } from '@inertiajs/vue3';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-
-
-const props = defineProps({
-    data:Object
-});
+import InputError from '@/Components/InputError.vue';
 const form = useForm({
     title:'',
     description:'',
-    status:1,
-    priority:false
+    status:false,
+    priority:1
 });
 
 </script>
@@ -26,8 +22,8 @@ const form = useForm({
 
                 <TextInput
                     id="title"
-                    type="title"
-                    class="mt-1 block w-full border"
+                    type="text"
+                    class="block w-full mt-1 border"
                     v-model="form.title"
                     required
                     autofocus
@@ -40,26 +36,19 @@ const form = useForm({
 
                 <TextInput
                     id="description"
-                    type="description"
-                    class="mt-1 block w-full border"
+                    type="text"
+                    class="block w-full mt-1 border"
                     v-model="form.description"
                     required
-                    autofocus
+
                 />
 
-                <InputError class="mt-2" :message="form.errors.title" />
+                <InputError class="mt-2" :message="form.errors.description" />
             </div>
             <div class="mt-4">
                 <InputLabel for="status" value="status" />
 
-                <TextInput
-                    id="status"
-                    type="number"
-                    class="mt-1 block w-full border"
-                    v-model="form.status"
-                    required
-                    autofocus
-                />
+
 
                 <InputError class="mt-2" :message="form.errors.status" />
             </div>
@@ -68,11 +57,11 @@ const form = useForm({
 
                 <TextInput
                     id="priority"
-                    type="boolean"
-                    class="mt-1 block w-full border"
+                    type="number"
+                    class="block w-full mt-1 border"
                     v-model="form.priority"
                     required
-                    autofocus
+
                 />
 
                 <InputError class="mt-2" :message="form.errors.priority" />
