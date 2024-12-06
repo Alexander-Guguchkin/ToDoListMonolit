@@ -89,19 +89,10 @@ import TextInput from '@/Components/TextInput.vue';
 import InputError from '@/Components/InputError.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import DangerButton from '@/Components/DangerButton.vue';
+import axios from 'axios';
 
 const props = defineProps({
     id:Number,
-    title:String,
-    description:String,
-    status:Boolean,
-    priority:Number
-});
-const form = useForm({
-    title:props.title,
-    description:props.description,
-    status:props.status,
-    priority:props.priority
 });
 
 const confrimingTaskModal = ref(false);
@@ -110,8 +101,25 @@ const descriptionInput = ref<HTMLInputElement | null>(null);
 const statusInput = ref<HTMLInputElement | null>(null);
 const priorityInput = ref<HTMLInputElement | null>(null);
 
+let form = useForm({
+    title:'',
+    description:'',
+    status:'',
+    priority:''
+});
+
 function confrimedTaskModal(){
     confrimingTaskModal.value = !confrimingTaskModal.value;
+    getTask();
+}
+function getTask(){
+    axios.get(`/tasks/${props.id}`).then((res)=>{
+        let result = res.data;
+        form.title = result.title
+        form.description = result.description
+        form.status = result.status
+        form.priority = result.priority
+    });
 }
 function closeModal(){
     confrimingTaskModal.value = false;

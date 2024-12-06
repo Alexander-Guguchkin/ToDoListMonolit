@@ -8,18 +8,13 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
 class TaskManagerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         $tasks = Task::all();
         return Inertia::render('Dashboard/Dashboard', ['data'=>$tasks], 200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -32,18 +27,12 @@ class TaskManagerController extends Controller
         return Redirect::route('dashboard');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         $task = Task::find($id);
-        return Inertia::render('Dashboard/Dashboard', ['data'=>$task], 200);
+        return response()->json($task);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $validated = $request->validate([
@@ -57,9 +46,6 @@ class TaskManagerController extends Controller
         return Redirect::route('dashboard');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         $task = Task::find($id);
