@@ -96,10 +96,6 @@ const props = defineProps({
 });
 
 const confrimingTaskModal = ref(false);
-const titleInput = ref<HTMLInputElement | null>(null);
-const descriptionInput = ref<HTMLInputElement | null>(null);
-const statusInput = ref<HTMLInputElement | null>(null);
-const priorityInput = ref<HTMLInputElement | null>(null);
 
 let form = useForm({
     title:'',

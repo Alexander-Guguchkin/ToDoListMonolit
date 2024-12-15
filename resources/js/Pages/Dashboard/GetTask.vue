@@ -1,6 +1,8 @@
 <script setup>
 import EditTask from './EditTask.vue';
 import DeleteTask from './DeleteTask.vue';
+import CreateTask from './CreateTask.vue';
+import Paginate from '@/Components/Paginate.vue';
 
 const props = defineProps({
     data:Object
@@ -35,4 +37,6 @@ const props = defineProps({
         </tr>
     </tbody>
 </table>
+<CreateTask/>
+<!-- <Paginate/> -->
 </template>

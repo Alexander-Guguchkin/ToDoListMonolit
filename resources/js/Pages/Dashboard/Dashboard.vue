@@ -25,7 +25,7 @@ let props = defineProps({
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
                         <GetTask :data="props.data"/>
-                        <CreateTask :data="props.data" />
+                        <!-- <CreateTask :data="props.data" /> -->
                     </div>
                 </div>
             </div>
